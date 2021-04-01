@@ -50,6 +50,12 @@ orderDate desc
      */
     public function store(Request $request)
     {
+        /*
+       DB::insert('insert into orders
+(orderDate,status,comments,customerNumber,employeeNumber)
+ values (?,?,?,?,?)',[$request->orderDate,$request->status,$request->comments,$request->customerNumber,$request->employeeNumber]);
+*/
+        
         $data = $this->validate($request,[
             'orderDate'=>'required',
             'status'=> 'required',
@@ -114,6 +120,7 @@ $order->save();
     }
     public function del($id)
     {
+        // DB::delete(DB::raw("DELETE FROM orders WHERE orderNumber = $id"));
         $order = Order::find($id);
         $order->delete();
         return redirect()->route('orders.index');
