@@ -76,3 +76,86 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+
+
+
+/////////////////////////////////
+MY SQL 
+
+ \Illuminate\Support\Facades\DB::statement('CREATE TABLE EMPLOYEES(
+employeeNumber int NOT NULL AUTO_INCREMENT,
+lastName varchar(255),
+firstName varchar(255),
+primary key(employeeNumber)
+)');
+
+   \Illuminate\Support\Facades\DB::statement('CREATE TABLE CUSTOMERS(
+customerNumber int NOT NULL AUTO_INCREMENT,
+customerName varchar(255),
+phone varchar(255),
+city varchar(255),
+primary key(customerNumber)
+)');
+
+
+    \Illuminate\Support\Facades\DB::statement('CREATE TABLE ORDERS(
+orderNumber int NOT NULL AUTO_INCREMENT,
+orderDate date,
+status varchar(100),
+comments varchar(255),
+updated_at date,
+created_at date,
+customerNumber int,
+employeeNumber int,
+primary key(orderNumber),
+foreign key(customerNumber) references CUSTOMERS(customerNumber),
+foreign key(employeeNumber) references EMPLOYEES(employeeNumber),
+on delete cascade
+on update cascade
+
+)');
+
+\Illuminate\Support\Facades\DB::statement('ALTER TABLE EMPLOYEES AUTO_INCREMENT = 1001');
+        \Illuminate\Support\Facades\DB::statement('ALTER TABLE CUSTOMERS AUTO_INCREMENT = 1001');
+
+
+
+
+
+
+
+insert 
+
+insert into customers (customerName,phone,city) values ('dulshan', '0766481255','Homogama');
+
+insert into employees (lastName,firstName) values ('sam', 'nim');
+
+// sql from order controller
+
+$emps = DB::select('select * from EMPLOYEES');
+ $cus = DB::select('select * from CUSTOMERS');
+      
+      
+ $orders = DB::select("select * from orders order by case
+when status = 'hold' then '1'
+when status = 'process' then '2'
+when status = 'shipped' then '3'
+else status end asc,
+orderDate desc
+");
+
+
+select * from orders order by case
+when status = 'hold' then '1'
+when status = 'process' then '2'
+when status = 'shipped' then '3'
+else status end asc,
+orderDate desc
+
+
+insert into orders(orderDate,status,comments,customerNumber,employeeNumber) value ('2000-4-1','hold','dd','1001','1001')
+
+
+
